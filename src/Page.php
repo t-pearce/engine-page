@@ -32,8 +32,6 @@ class Page implements Renderable
 			$html .= $element->render();
 		}
 
-		// $html .= "Hello world";
-
 		$html .= $this->template->renderBodyClose();
 		$html .= $this->template->renderFooter();
 

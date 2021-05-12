@@ -4,24 +4,22 @@ namespace Engine\Page\Element;
 
 abstract class Element implements \Engine\Page\Renderable
 {
-	protected static string $tag;
-
 	/** @var Attribute[] */
 	protected array $attributes;
 
 	public function render() : string
 	{
-		return $this->constructOpeningTag();
+		return $this->constructOpeningTag() . $this->constructClosingTag();
 	}
 
 	protected function constructClosingTag() : string
 	{
-		return "</" . self::$tag . ">";
+		return "</" . $this->getTag() . ">";
 	}
 
 	protected function constructOpeningTag() : string
 	{
-		return "<" . self::$tag . " {$this->constructAttributes()}>";
+		return "<" . $this->getTag() . " {$this->constructAttributes()}>";
 	}
 
 	protected function constructAttributes() : string
@@ -34,5 +32,10 @@ abstract class Element implements \Engine\Page\Renderable
 		}
 
 		return implode(" ", $attributes);
+	}
+
+	protected function getTag()
+	{
+		return strtolower(static::class);
 	}
 }

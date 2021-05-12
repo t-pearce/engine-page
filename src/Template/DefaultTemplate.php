@@ -4,43 +4,35 @@ namespace Engine\Page\Template;
 
 class DefaultTemplate extends Template
 {
-	public function renderHeader(): string
+	protected function outputHeader() : void
 	{
-		ob_start();
 ?>
 <html>
 	<head>
 	</head>
 <?php
-		return ob_get_clean();
 	}
 
-	public function renderBodyOpen(): string
+	protected function outputBodyOpen(): void
 	{
-		ob_start();
 ?>
 	<body>
 <?php
-		return ob_get_clean();
 	}
 
 
-	public function renderBodyClose(): string
+	protected function outputBodyClose(): void
 	{
-		ob_start();
 ?>
 	</body>
 <?php
-		return ob_get_clean();
 	}
 
-	public function renderFooter(): string
+	protected function outputFooter(): void
 	{
-		ob_start();
 ?>
 </html>
 <?php
-		return ob_get_clean();
 	}
 
 }
