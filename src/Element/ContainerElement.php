@@ -5,7 +5,7 @@ namespace Engine\Page\Element;
 abstract class ContainerElement extends Element
 {
 	/** @var Element[] */
-	private array $elements;
+	protected array $elements = [];
 
 	public function render(): string
 	{

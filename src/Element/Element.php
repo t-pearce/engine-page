@@ -5,7 +5,15 @@ namespace Engine\Page\Element;
 abstract class Element implements \Engine\Page\Renderable
 {
 	/** @var Attribute[] */
-	protected array $attributes;
+	protected array $attributes = [];
+	protected string $id;
+
+	use \Engine\Traits\Creatable;
+
+	public function __construct()
+	{
+		$this->id = uniqid("attr_set_");
+	}
 
 	public function render() : string
 	{
@@ -14,12 +22,12 @@ abstract class Element implements \Engine\Page\Renderable
 
 	protected function constructClosingTag() : string
 	{
-		return "</" . $this->getTag() . ">";
+		return "</" . $this->getTag() . ">\n";
 	}
 
 	protected function constructOpeningTag() : string
 	{
-		return "<" . $this->getTag() . " {$this->constructAttributes()}>";
+		return "<" . $this->getTag() . " {$this->constructAttributes()}>\n";
 	}
 
 	protected function constructAttributes() : string
@@ -36,6 +44,17 @@ abstract class Element implements \Engine\Page\Renderable
 
 	protected function getTag()
 	{
-		return strtolower(static::class);
+		$reflection = new \ReflectionClass(static::class);
+
+		return strtolower($reflection->getShortName());
+	}
+
+	public function getScripts() : array
+	{
+		return [];
+	}
+	public function getStyles() : array
+	{
+		return [];
 	}
 }

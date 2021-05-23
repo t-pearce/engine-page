@@ -6,14 +6,19 @@ abstract class Template
 {
 	use \Engine\Traits\Singleton;
 
-	abstract protected function outputHeader() : void;
+	abstract protected function outputHeaderOpen() : void;
+	abstract protected function outputHeaderClose() : void;
 	abstract protected function outputBodyOpen() : void;
 	abstract protected function outputBodyClose() : void;
 	abstract protected function outputFooter() : void;
 
-	public final function renderHeader() : string
+	public final function renderHeaderOpen() : string
 	{
-		return $this->renderSection([$this, "outputHeader"]);
+		return $this->renderSection([$this, "outputHeaderOpen"]);
+	}
+	public final function renderHeaderClose() : string
+	{
+		return $this->renderSection([$this, "outputHeaderClose"]);
 	}
 	public final function renderBodyOpen() : string
 	{

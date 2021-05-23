@@ -2,8 +2,7 @@
 
 namespace Engine\Page\Element;
 
-class Body extends ContainerElement
+class Canvas extends ContainerElement
 {
-	use \Engine\Traits\Singleton;
 	use \Engine\Page\Element\Traits\SelfName;
 }
