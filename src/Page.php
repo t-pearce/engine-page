@@ -9,12 +9,18 @@ abstract class Page implements Renderable
 	private \Engine\Page\Template\Template $template;
 	private DataProvider $dataProvider;
 
+	protected array $post;
+	protected array $get;
+
 	/** @var Element[] */
 	private array $elements;
 
+	use \Engine\Page\Trait\Scripted;
+	use \Engine\Page\Trait\Styled;
+
 	public function __construct(?\Engine\Page\Template\Template $template = null)
 	{
-		$this->template = $template ?? \Engine\Page\Template\DefaultTemplate::getInstance();
+		$this->template = $template ?? \Engine\ConfigManager::getInstance()->get(\Engine\Config::PAGE_DEFAULT_TEMPLATE);
 		$this->elements = [];
 	}
 
@@ -52,37 +58,50 @@ abstract class Page implements Renderable
 
 	private function getScriptHtml()
 	{
-		$scripts = [];
+		$html    = "";
+		$scripts = [...$this->getScripts()];
 
 		foreach($this->elements as $element)
 		{
-			$scripts = [...$scripts, ...$element->getScripts()];
+			foreach($element->getScripts() as $script)
+			{
+				$scripts[] = $script;
+			}
 		}
 
-		$html = "";
+		$scripts = array_filter($scripts);
 
-		foreach($scripts as $tag)
+		foreach(array_filter($scripts) as $scriptPath)
 		{
-			$html .= $tag->render();
+			$html .= \Engine\Page\Element\Script::create()
+			->setSource($scriptPath)
+			->render();
 		}
-		
+
 		return $html;
 	}
 
 	private function getStyleHtml()
 	{
-		$html  = "";
-
-		$styles = [$this->getStyle()];
+		$html    = "";
+		$styles = [...$this->getStyles()];
 
 		foreach($this->elements as $element)
 		{
-			$styles = [...$styles, ...$element->getStyles()];
+			foreach($element->getStyles() as $style)
+			{
+				$styles[] = $style;
+			}
 		}
 
-		foreach(array_filter($styles) as $tag)
+		$styles = array_filter($styles);
+
+		foreach(array_filter($styles) as $stylePath)
 		{
-			$html .= $tag->render();
+			$html .= \Engine\Page\Element\Link::create()
+			->setSource($stylePath)
+			->addAttribute(new \Engine\Page\Element\Attribute("rel", "stylesheet"))
+			->render();
 		}
 
 		return $html;
@@ -95,10 +114,18 @@ abstract class Page implements Renderable
 		return $this;
 	}
 
-	abstract protected function addElements();
-
-	protected function getStyle() : ?\Engine\Page\Element\Style
+	public function setGet(array $get) : self
 	{
-		return null;
+		$this->get = $get;
+	
+		return $this;
 	}
+	public function setPost(array $post) : self
+	{
+		$this->post = $post;
+	
+		return $this;
+	}
+
+	abstract protected function addElements();
 }

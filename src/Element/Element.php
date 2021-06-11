@@ -9,6 +9,8 @@ abstract class Element implements \Engine\Page\Renderable
 	protected string $id;
 
 	use \Engine\Traits\Creatable;
+	use \Engine\Page\Trait\Scripted;
+	use \Engine\Page\Trait\Styled;
 
 	public function __construct()
 	{
@@ -42,19 +44,19 @@ abstract class Element implements \Engine\Page\Renderable
 		return implode(" ", $attributes);
 	}
 
+	public function addAttribute(Attribute $attribute, bool $exclusive = false) : self
+	{
+		if($exclusive)
+			$this->attributes[$attribute->getName()] = $attribute;
+		else $this->attributes[] = $attribute;
+
+		return $this;
+	}
+
 	protected function getTag()
 	{
 		$reflection = new \ReflectionClass(static::class);
 
 		return strtolower($reflection->getShortName());
-	}
-
-	public function getScripts() : array
-	{
-		return [];
-	}
-	public function getStyles() : array
-	{
-		return [];
 	}
 }

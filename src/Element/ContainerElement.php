@@ -38,4 +38,28 @@ abstract class ContainerElement extends Element
 	
 		return $this;
 	}
+
+	public function getScripts() : array
+	{
+		$scripts = [...$this->scripts];
+
+		foreach($this->elements as $element)
+		{
+			$scripts = [...$scripts, ...$element->getScripts()];
+		}
+
+		return $scripts;
+	}
+
+	public function getStyles() : array
+	{
+		$styles = [...$this->styles];
+
+		foreach($this->elements as $element)
+		{
+			$styles = [...$styles, ...$element->getStyles()];
+		}
+
+		return $styles;
+	}
 }
