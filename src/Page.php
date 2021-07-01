@@ -39,9 +39,6 @@ abstract class Page implements Renderable
 		$html  = "";
 		$html .= $this->template->renderHeaderOpen();
 
-		$html .= $this->getScriptHtml();
-		$html .= $this->getStyleHtml();
-
 		$html .= $this->template->renderHeaderClose();
 		$html .= $this->template->renderBodyOpen();
 
@@ -51,6 +48,10 @@ abstract class Page implements Renderable
 		}
 
 		$html .= $this->template->renderBodyClose();
+
+		$html .= $this->getScriptHtml();
+		$html .= $this->getStyleHtml();
+
 		$html .= $this->template->renderFooter();
 
 		return $html;
@@ -69,7 +70,8 @@ abstract class Page implements Renderable
 			}
 		}
 
-		$scripts = array_filter($scripts);
+		$scripts = array_unique(array_filter($scripts));
+
 
 		foreach(array_filter($scripts) as $scriptPath)
 		{
@@ -94,7 +96,7 @@ abstract class Page implements Renderable
 			}
 		}
 
-		$styles = array_filter($styles);
+		$styles = array_unique(array_filter($styles));
 
 		foreach(array_filter($styles) as $stylePath)
 		{

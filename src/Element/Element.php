@@ -36,10 +36,17 @@ abstract class Element implements \Engine\Page\Renderable
 	{
 		$attributes = [];
 
+		$classes = [];
+
 		foreach($this->attributes as $attribute)
 		{
-			$attributes[] = "{$attribute->getName()}=\"{$attribute->getValue()}\"";
+			if($attribute->getName() === "class")
+				$classes[] = $attribute->getValue();
+			else $attributes[] = "{$attribute->getName()}=\"{$attribute->getValue()}\"";
 		}
+
+		if(count($classes) > 0)
+			$attributes[] = "class=\"" . implode(" ", $classes) . "\"";
 
 		return implode(" ", $attributes);
 	}

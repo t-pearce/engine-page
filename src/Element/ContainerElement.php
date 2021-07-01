@@ -23,7 +23,7 @@ abstract class ContainerElement extends Element
 		return $html;
 	}
 
-	public function addElement(Element $element) : self
+	public function addElement(Element $element) : static
 	{
 		$this->elements[] = $element;
 
@@ -32,7 +32,7 @@ abstract class ContainerElement extends Element
 	/**
 	 * @param Element[] $elements
 	 */
-	public function setElements(array $elements) : self
+	public function setElements(array $elements) : static
 	{
 		$this->elements = $elements;
 	
