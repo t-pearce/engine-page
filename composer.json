@@ -12,6 +12,10 @@
             "Engine\\Page\\": "src/"
         }
     },
+    "require": {
+        "weirweb/engine": "@dev",
+        "weirweb/engine-routing": "@dev"
+    },
     "repositories": [
         {
             "type": "path",
