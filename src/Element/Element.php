@@ -66,4 +66,9 @@ abstract class Element implements \Engine\Page\Renderable
 
 		return strtolower($reflection->getShortName());
 	}
+
+	public function __toString()
+	{
+		return $this->render();
+	}
 }

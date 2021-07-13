@@ -18,4 +18,14 @@ class Form extends ContainerElement
 
 		return parent::render();
 	}
+
+	public function usePost()
+	{
+		$this->addAttribute(new Attribute("method", "post"), true);
+	}
+
+	public function useGet()
+	{
+		$this->addAttribute(new Attribute("method", "get"), true);
+	}
 }

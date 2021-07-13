@@ -2,7 +2,7 @@
 
 namespace Engine\Page\Element;
 
-final class Literal extends Element
+class Literal extends Element
 {
 	private string $contents;
 

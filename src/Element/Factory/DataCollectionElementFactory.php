@@ -28,7 +28,7 @@ class DataCollectionElementFactory
 				$dataListEntries[] = new \Engine\Page\Element\Model\DataListEntry($key, $value);
 			}
 
-			return \Engine\Page\Element\DataList::create()
+			return \Engine\Page\Element\DescriptionList::create()
 			->setEntries(...$dataListEntries);
 		}
 	}

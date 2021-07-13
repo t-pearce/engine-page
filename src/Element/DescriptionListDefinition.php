@@ -2,7 +2,7 @@
 
 namespace Engine\Page\Element;
 
-class DataTerm extends ContainerElement
+class DescriptionListDefinition extends ContainerElement
 {
 	private string $value;
 
@@ -18,7 +18,7 @@ class DataTerm extends ContainerElement
 	}
 	protected function getTag()
 	{
-		return "dt";
+		return "dd";
 	}
 
 	public function setValue(string $value) : self

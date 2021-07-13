@@ -6,6 +6,7 @@ class Input extends VoidElement
 {
 	private bool $hasName = false;
 	private bool $hasType = false;
+	private string $dataList;
 	private ?string $value;
 
 	use \Engine\Page\Element\Traits\SelfName;
@@ -18,7 +19,10 @@ class Input extends VoidElement
 			throw new \LogicException("Input has not been configured correctly; no name given");
 
 		if(isset($this->value))
-			$this->addAttribute(new Attribute("value", $this->value));
+			$this->addAttribute(new Attribute("value", htmlentities($this->value)));
+		
+		if(isset($this->dataList))
+			$this->addAttribute(new Attribute("list", $this->dataList));
 
 		return parent::render();
 	}
@@ -56,6 +60,12 @@ class Input extends VoidElement
 	public function setValue(?string $value) : self
 	{
 		$this->value = $value;
+	
+		return $this;
+	}
+	public function setDataList(string $dataList) : self
+	{
+		$this->dataList = $dataList;
 	
 		return $this;
 	}
