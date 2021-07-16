@@ -14,40 +14,23 @@ class DescriptionList extends ContainerElement
 
 	public function render(): string
 	{
-		$terms = [];
-		$defs  = [];
+		$elements = [];
 
 		foreach($this->entries as $element)
 		{
-			$terms[] = DescriptionListTerm::create()
-			->setValue($element->getKey());
+			if(!$this->reverse)
+				$elements[] = DescriptionListTerm::create()
+				->setValue($element->getKey());
 
-			$defs[] = DescriptionListDefinition::create()
+			$elements[] = DescriptionListDefinition::create()
 			->setValue($element->getValue());
+
+			if($this->reverse)
+				$elements[] = DescriptionListTerm::create()
+				->setValue($element->getKey());
 		}
 
-		$termsDiv = Div::create()
-		->setElements($terms);
-
-		$defsDiv = Div::create()
-		->setElements($defs);
-
-		if($this->reverse)
-		{
-			$this->setElements
-			([
-				$defsDiv,
-				$termsDiv,
-			]);
-		}
-		else
-		{
-			$this->setElements
-			([
-				$termsDiv,
-				$defsDiv
-			]);
-		}
+		$this->setElements($elements);
 
 		return parent::render();
 	}
