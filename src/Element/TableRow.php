@@ -38,6 +38,26 @@ class TableRow extends ContainerElement
 	public function setData(array $data) : self
 	{
 		$this->data = $data;
+
+		/** @var \Renderable $datum  */
+		foreach($data as $datum)
+		{
+			if(is_object($datum) && \Engine\Util\Classes::hasTrait($datum::class, \Engine\Page\Trait\Scripted::class))
+			{
+				foreach($datum->getScripts() as $script)
+				{
+					$this->addScript($script);
+				}
+			}
+
+			if(is_object($datum) && \Engine\Util\Classes::hasTrait($datum::class, \Engine\Page\Trait\Styled::class))
+			{
+				foreach($datum->getStyles() as $style)
+				{
+					$this->addStyle($style);
+				}
+			}
+		}
 	
 		return $this;
 	}
