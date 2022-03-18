@@ -2,8 +2,8 @@
 
 namespace Engine\Page\Element\Enum;
 
-class FormInputTypes extends \Engine\Abstracts\Enum
+enum FormInputTypes : string
 {
-	const TEXT   = "text";
-	const SUBMIT = "submit";
+	case TEXT   = "text";
+	case SUBMIT = "submit";
 }

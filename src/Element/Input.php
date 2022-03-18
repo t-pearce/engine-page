@@ -47,7 +47,7 @@ class Input extends VoidElement
 
 	public function setType(string $type) : self
 	{
-		if(!\Engine\Page\Element\Enum\FormInputTypes::isConstantValue($type))
+		if($type instanceof \Engine\Page\Element\Enum\FormInputTypes)
 			throw new \LogicException("{$type} is an invalid input type");
 
 		$this->addAttribute(new Attribute("type", $type), true);
