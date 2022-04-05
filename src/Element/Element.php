@@ -51,7 +51,7 @@ abstract class Element implements \Engine\Page\Renderable
 		return implode(" ", $attributes);
 	}
 
-	public function addAttribute(Attribute $attribute, bool $exclusive = false) : self
+	public function addAttribute(Attribute $attribute, bool $exclusive = false) : static
 	{
 		if($exclusive)
 			$this->attributes[$attribute->getName()] = $attribute;

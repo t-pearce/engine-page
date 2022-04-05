@@ -5,13 +5,14 @@ namespace Engine\Page\Element;
 class TableRow extends ContainerElement
 {
 	private bool $isHeader = false;
+	private bool $isRowScoped = false;
 	private array $data;
 
 	public function render(): string
 	{
-		/** @var TableHeader|TableData */
 		$cell = $this->isHeader ? TableHeader::class : TableData::class;
 
+		$first = true;
 		foreach($this->data as $datum)
 		{
 			$toShow = "";
@@ -20,11 +21,23 @@ class TableRow extends ContainerElement
 				$toShow = implode(", ", $datum);
 			else $toShow = $datum;
 
-			$this->addElement
-			(
-				$cell::create()
-				->setContents((string)$toShow)
-			);
+			if($this->isRowScoped && $first)
+			{
+				if($first)
+				{
+					$this->addElement(TableHeader::create()->setContents((string)$toShow));
+					$first = false;
+				}
+				else $this->addElement(TableData::create()->setContents((string)$toShow));
+			}
+			else
+			{
+				$this->addElement
+				(
+					$cell::create()
+					->setContents((string)$toShow)
+				);
+			}
 		}
 
 		return parent::render();
@@ -65,6 +78,12 @@ class TableRow extends ContainerElement
 	public function setIsHeader(bool $isHeader = true) : self
 	{
 		$this->isHeader = $isHeader;
+	
+		return $this;
+	}
+	public function setIsRowscoped(bool $isRowscoped = true) : self
+	{
+		$this->isRowScoped = $isRowscoped;
 	
 		return $this;
 	}

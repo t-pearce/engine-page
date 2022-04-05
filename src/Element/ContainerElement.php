@@ -7,7 +7,7 @@ abstract class ContainerElement extends Element
 	/** @var Element[] */
 	protected array $elements = [];
 
-	public function render(): string
+	public function render() : string
 	{
 		$html = "";
 

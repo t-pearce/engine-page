@@ -72,12 +72,9 @@ abstract class Page implements Renderable
 
 		$scripts = array_unique(array_filter($scripts));
 
-
-		foreach(array_filter($scripts) as $scriptPath)
+		foreach(array_filter($scripts) as $script)
 		{
-			$html .= \Engine\Page\Element\Script::create()
-			->setSource($scriptPath)
-			->render();
+			$html .= $script->render();
 		}
 
 		return $html;

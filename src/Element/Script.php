@@ -8,7 +8,7 @@ class Script extends ContainerElement
 
 	use \Engine\Page\Element\Traits\SelfName;
 
-	public function render(): string
+	public function render() : string
 	{
 		$html = "";
 
